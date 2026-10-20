@@ -1,12 +1,1096 @@
-[
-  {
-    "id": "read-01",
-    "category": "reading",
-    "level": "Level 1",
-    "title": "Identifying Main Ideas",
-    "passage": "Read the following short passage...",
-    "question": "What is the main point of paragraph 2?",
-    "options": ["Option A", "Option B", "Option C", "Option D"],
-    "correctAnswer": 1
-  }
-]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Functional Skills English Exam Practice (Levels 1 & 2)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-brand-500 selection:text-white">
+
+  <!-- TOP HEADER / NAV -->
+  <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Brand / Logo -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('dashboard')">
+          <div class="bg-brand-600 text-white p-2 rounded-lg font-bold text-xl flex items-center justify-center w-10 h-10 shadow-md">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div>
+            <h1 class="text-lg font-bold tracking-tight text-white leading-none">English Skills Hub</h1>
+            <p class="text-xs text-slate-400 mt-0.5">Functional Skills Prep (L1 & L2)</p>
+          </div>
+        </div>
+
+        <!-- Level Selector & Global Stats -->
+        <div class="flex items-center space-x-4">
+          <!-- Level Toggle Badge -->
+          <div class="bg-slate-800 p-1 rounded-xl flex items-center border border-slate-700">
+            <button id="level-l1-btn" onclick="setLevel('L1')" class="px-3 py-1 text-xs font-semibold rounded-lg transition-all duration-200">
+              Level 1
+            </button>
+            <button id="level-l2-btn" onclick="setLevel('L2')" class="px-3 py-1 text-xs font-semibold rounded-lg transition-all duration-200">
+              Level 2
+            </button>
+          </div>
+
+          <!-- Progress Quick Summary -->
+          <button onclick="switchView('dashboard')" class="hidden sm:flex items-center space-x-2 text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+            <i class="fa-solid fa-trophy text-amber-400"></i>
+            <span>Saved Progress</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- NAVIGATION TABS -->
+    <div class="mb-6 border-b border-slate-200 flex flex-wrap gap-2 sm:gap-6">
+      <button onclick="switchView('dashboard')" id="nav-dashboard" class="nav-tab px-3 py-2 text-sm font-medium border-b-2 border-brand-600 text-brand-600 flex items-center space-x-2">
+        <i class="fa-solid fa-house text-xs"></i>
+        <span>Dashboard</span>
+      </button>
+      <button onclick="switchView('practice')" id="nav-practice" class="nav-tab px-3 py-2 text-sm font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 flex items-center space-x-2">
+        <i class="fa-solid fa-lightbulb text-xs"></i>
+        <span>Topic Practice (Instant Feedback)</span>
+      </button>
+      <button onclick="switchView('exam')" id="nav-exam" class="nav-tab px-3 py-2 text-sm font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 flex items-center space-x-2">
+        <i class="fa-solid fa-file-signature text-xs"></i>
+        <span>Full Mock Exam Mode</span>
+      </button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- VIEW 1: DASHBOARD                          -->
+    <!-- ========================================== -->
+    <div id="view-dashboard" class="space-y-6">
+      <!-- Welcome Banner -->
+      <div class="bg-gradient-to-r from-brand-800 to-brand-600 rounded-2xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+        <div class="relative z-10 max-w-2xl">
+          <span class="inline-block bg-brand-500/30 text-brand-100 text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider mb-3 backdrop-blur-sm border border-brand-400/20">
+            Current Active Level: <span id="dash-active-level" class="font-bold underline">Level 1</span>
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Master Functional Skills English</h2>
+          <p class="mt-2 text-slate-100 text-sm sm:text-base leading-relaxed">
+            Prepare for your City & Guilds, Pearson Edexcel, Highfield, or NCFE exam with interactive bite-sized topics or full timed mock papers.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <button onclick="switchView('practice')" class="bg-white text-brand-800 hover:bg-slate-100 font-semibold text-sm px-5 py-2.5 rounded-xl shadow-md transition-all duration-150 transform hover:-translate-y-0.5">
+              <i class="fa-solid fa-play mr-2 text-xs"></i> Start Topic Practice
+            </button>
+            <button onclick="switchView('exam')" class="bg-brand-900/40 hover:bg-brand-900/60 text-white font-semibold text-sm px-5 py-2.5 rounded-xl border border-white/20 transition-all">
+              <i class="fa-solid fa-clock mr-2 text-xs"></i> Take Mock Exam
+            </button>
+          </div>
+        </div>
+        <!-- Decorative SVG Background Icon -->
+        <i class="fa-solid fa-book-open text-white/10 text-9xl absolute -right-6 -bottom-6 pointer-events-none"></i>
+      </div>
+
+      <!-- Stats Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+          <div class="p-3 bg-blue-50 text-brand-600 rounded-xl">
+            <i class="fa-solid fa-circle-check text-2xl"></i>
+          </div>
+          <div>
+            <p class="text-xs text-slate-500 uppercase font-semibold">Questions Answered</p>
+            <p id="stat-total-answered" class="text-2xl font-bold text-slate-800">0</p>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+          <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
+            <i class="fa-solid fa-bullseye text-2xl"></i>
+          </div>
+          <div>
+            <p class="text-xs text-slate-500 uppercase font-semibold">Practice Accuracy</p>
+            <p id="stat-accuracy" class="text-2xl font-bold text-slate-800">0%</p>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+          <div class="p-3 bg-purple-50 text-purple-600 rounded-xl">
+            <i class="fa-solid fa-award text-2xl"></i>
+          </div>
+          <div>
+            <p class="text-xs text-slate-500 uppercase font-semibold">Best Mock Exam</p>
+            <p id="stat-best-exam" class="text-2xl font-bold text-slate-800">N/A</p>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+          <div class="p-3 bg-amber-50 text-amber-600 rounded-xl">
+            <i class="fa-solid fa-pen-nib text-2xl"></i>
+          </div>
+          <div>
+            <p class="text-xs text-slate-500 uppercase font-semibold">Writing Rubrics Tried</p>
+            <p id="stat-writing-completed" class="text-2xl font-bold text-slate-800">0</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Modules Grid -->
+      <h3 class="text-lg font-bold text-slate-800 pt-2">Choose a Subject Area to Practice</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Reading Card -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 bg-sky-100 text-sky-600 rounded-xl flex items-center justify-center text-xl font-bold mb-4">
+              <i class="fa-solid fa-book-reader"></i>
+            </div>
+            <h4 class="text-lg font-bold text-slate-800 mb-2">Reading Comprehension</h4>
+            <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+              Practise text purpose, organizational features, facts vs. opinions, tone, implied meaning, and comparison skills.
+            </p>
+          </div>
+          <button onclick="startTopic('reading')" class="w-full py-2.5 bg-slate-100 hover:bg-brand-50 hover:text-brand-700 text-slate-700 font-semibold text-sm rounded-xl transition flex items-center justify-center space-x-2">
+            <span>Practice Reading</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </button>
+        </div>
+
+        <!-- SPaG Card -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-xl font-bold mb-4">
+              <i class="fa-solid fa-spell-check"></i>
+            </div>
+            <h4 class="text-lg font-bold text-slate-800 mb-2">SPaG (Grammar & Punctuation)</h4>
+            <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+              Master subject-verb agreement, homophones, apostrophes, commas, complex sentences, and spelling conventions.
+            </p>
+          </div>
+          <button onclick="startTopic('spag')" class="w-full py-2.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 font-semibold text-sm rounded-xl transition flex items-center justify-center space-x-2">
+            <span>Practice SPaG</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </button>
+        </div>
+
+        <!-- Writing Task Card -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-xl font-bold mb-4">
+              <i class="fa-solid fa-file-pen"></i>
+            </div>
+            <h4 class="text-lg font-bold text-slate-800 mb-2">Writing Tasks & Self-Check</h4>
+            <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+              Write formal complaints, emails, articles, and speeches. Use interactive mark scheme rubrics to evaluate your work.
+            </p>
+          </div>
+          <button onclick="startTopic('writing')" class="w-full py-2.5 bg-slate-100 hover:bg-purple-50 hover:text-purple-700 text-slate-700 font-semibold text-sm rounded-xl transition flex items-center justify-center space-x-2">
+            <span>Practice Writing</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Reset Data Button -->
+      <div class="pt-6 border-t border-slate-200 flex justify-end">
+        <button onclick="resetProgress()" class="text-xs text-slate-400 hover:text-red-500 transition flex items-center space-x-1">
+          <i class="fa-solid fa-trash-can"></i>
+          <span>Clear My Stored Progress</span>
+        </button>
+      </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- VIEW 2: TOPIC PRACTICE MODE (Instant)      -->
+    <!-- ========================================== -->
+    <div id="view-practice" class="hidden space-y-6">
+      
+      <!-- Topic Filter Tabs -->
+      <div class="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-400 mr-2">Topic:</span>
+          <button onclick="filterPracticeTopic('all')" id="topic-btn-all" class="topic-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 text-white">All</button>
+          <button onclick="filterPracticeTopic('reading')" id="topic-btn-reading" class="topic-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">Reading</button>
+          <button onclick="filterPracticeTopic('spag')" id="topic-btn-spag" class="topic-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">SPaG</button>
+          <button onclick="filterPracticeTopic('writing')" id="topic-btn-writing" class="topic-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">Writing</button>
+        </div>
+        <div class="text-xs text-slate-500 font-medium">
+          Showing <span id="practice-count" class="font-bold text-slate-800">0</span> questions for <span id="practice-active-level" class="font-bold text-brand-600">Level 1</span>
+        </div>
+      </div>
+
+      <!-- Practice Questions Container -->
+      <div id="practice-questions-list" class="space-y-6">
+        <!-- Dynamically Populated by JavaScript -->
+      </div>
+
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- VIEW 3: FULL MOCK EXAM MODE               -->
+    <!-- ========================================== -->
+    <div id="view-exam" class="hidden space-y-6">
+      
+      <!-- Exam Start Intro Screen -->
+      <div id="exam-start-card" class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm text-center max-w-2xl mx-auto space-y-4">
+        <div class="w-16 h-16 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center text-2xl font-bold mx-auto">
+          <i class="fa-solid fa-stopwatch"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-slate-800">Full Functional Skills Exam Paper</h3>
+        <p class="text-slate-600 text-sm leading-relaxed">
+          You are about to start the <span id="exam-card-level-label" class="font-bold text-brand-600">Level 1</span> English Practice Exam. 
+          Answers and hints are hidden until you complete the test.
+        </p>
+
+        <div class="bg-slate-50 p-4 rounded-xl text-left border border-slate-200 space-y-2 text-xs text-slate-600">
+          <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-check text-emerald-500"></i>
+            <span><strong>Reading & SPaG:</strong> Automatically marked multiple choice questions.</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-check text-emerald-500"></i>
+            <span><strong>Extended Writing Task:</strong> Includes self-assessment mark scheme checklist.</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-check text-emerald-500"></i>
+            <span><strong>Timer:</strong> Optional timer (60 minutes recommended).</span>
+          </div>
+        </div>
+
+        <button onclick="startExamPaper()" class="w-full sm:w-auto px-8 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm rounded-xl shadow-md transition-all">
+          Begin Exam Paper
+        </button>
+      </div>
+
+      <!-- Exam Active Interface -->
+      <div id="exam-active-container" class="hidden space-y-6">
+        
+        <!-- Sticky Exam Timer Header -->
+        <div class="bg-slate-900 text-white p-4 rounded-2xl shadow-md flex items-center justify-between sticky top-20 z-40">
+          <div>
+            <span class="text-xs text-slate-400 block uppercase font-semibold">Active Assessment</span>
+            <span id="exam-header-title" class="text-sm sm:text-base font-bold text-white">Level 1 Mock Paper</span>
+          </div>
+          <div class="flex items-center space-x-4">
+            <div class="text-right">
+              <span class="text-xs text-slate-400 block">Time Elapsed</span>
+              <span id="exam-timer" class="font-mono text-lg font-bold text-amber-400">00:00</span>
+            </div>
+            <button onclick="submitExamPaper()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition">
+              Submit Paper
+            </button>
+          </div>
+        </div>
+
+        <!-- Exam Questions List -->
+        <div id="exam-questions-list" class="space-y-6">
+          <!-- Dynamically Generated -->
+        </div>
+
+        <!-- Submit Button at bottom -->
+        <div class="flex justify-end pt-4">
+          <button onclick="submitExamPaper()" class="px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm rounded-xl shadow-lg transition">
+            Finish & View Results
+          </button>
+        </div>
+      </div>
+
+      <!-- Exam Results Summary View -->
+      <div id="exam-results-container" class="hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-md text-center space-y-4">
+          <div id="exam-result-badge" class="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-bold mx-auto">
+            <!-- Icon dynamically inserted -->
+          </div>
+          <h3 id="exam-result-title" class="text-2xl font-bold">Exam Results</h3>
+          <p id="exam-result-subtitle" class="text-slate-600 text-sm max-w-lg mx-auto"></p>
+
+          <!-- Score Breakdown Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-xl mx-auto pt-4">
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+              <span class="text-xs text-slate-500 block uppercase">Overall Score</span>
+              <span id="exam-score-percentage" class="text-2xl font-black text-slate-800">0%</span>
+            </div>
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+              <span class="text-xs text-slate-500 block uppercase">Marks Achieved</span>
+              <span id="exam-score-raw" class="text-2xl font-black text-slate-800">0 / 0</span>
+            </div>
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+              <span class="text-xs text-slate-500 block uppercase">Grade Outcome</span>
+              <span id="exam-pass-status" class="text-xl font-bold">PASS</span>
+            </div>
+          </div>
+
+          <div class="pt-4 flex justify-center space-x-3">
+            <button onclick="switchView('practice')" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl">
+              Back to Topic Practice
+            </button>
+            <button onclick="startExamPaper()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs rounded-xl">
+              Retake Mock Exam
+            </button>
+          </div>
+        </div>
+
+        <!-- Detailed Breakdown Review -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+          <h4 class="text-base font-bold text-slate-800">Detailed Review & Explanations</h4>
+          <div id="exam-review-list" class="space-y-4">
+            <!-- Dynamically filled with marked responses -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 space-y-2">
+      <p>Functional Skills English Exam Revision Hub &bull; Levels 1 & 2</p>
+      <p class="text-slate-400">Created for independent study and classroom practice. No installer required.</p>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT APP LOGIC -->
+  <script>
+    // ==========================================
+    // QUESTION BANK DATA (LEVEL 1 & LEVEL 2)
+    // ==========================================
+    const questionBank = {
+      L1: [
+        // --- READING (L1) ---
+        {
+          id: 'l1_r1',
+          level: 'L1',
+          topic: 'reading',
+          type: 'mcq',
+          title: 'Passage Analysis: Promotional Email',
+          passage: `Subject: Exclusive Offer: Free Gym Pass this Weekend!
+Dear Resident,
+Are you looking to boost your fitness and try something new? Greendale Leisure Centre is opening its doors for free this Saturday and Sunday. You can enjoy our state-of-the-art gym, Olympic swimming pool, and group yoga classes. 
+
+Please note: Pre-booking online is required before 5 PM on Friday to secure your place. Don't miss out on this fantastic opportunity to get active for free!`,
+          question: 'What is the main purpose of this email text?',
+          options: [
+            'To warn residents about new safety rules at the leisure centre.',
+            'To persuade residents to book a free pass for the upcoming weekend.',
+            'To explain how to register as a full-time swimming coach.',
+            'To complain about late bookings on Friday evenings.'
+          ],
+          correct: 1,
+          hint: 'Look at what the email asks the reader to do and what benefit it offers.',
+          explanation: 'The main purpose is to persuade residents to take advantage of the free weekend pass by booking online.'
+        },
+        {
+          id: 'l1_r2',
+          level: 'L1',
+          topic: 'reading',
+          type: 'mcq',
+          title: 'Fact vs. Opinion',
+          passage: `Greendale Community Library opened in 1982. It houses over 15,000 books and host weekly reading groups. In my view, it is the most wonderful building in the town because of its warm atmosphere.`,
+          question: 'Which phrase from the text is an OPINION rather than a FACT?',
+          options: [
+            'Greendale Community Library opened in 1982.',
+            'It houses over 15,000 books',
+            'In my view, it is the most wonderful building in the town',
+            'and host weekly reading groups.'
+          ],
+          correct: 2,
+          hint: 'Facts can be proven true or false. Opinions reflect personal feelings or beliefs.',
+          explanation: '"In my view, it is the most wonderful building..." expresses a personal feeling that cannot be objectively measured or proven.'
+        },
+
+        // --- SPAG (L1) ---
+        {
+          id: 'l1_s1',
+          level: 'L1',
+          topic: 'spag',
+          type: 'mcq',
+          title: 'Subject-Verb Agreement',
+          passage: null,
+          question: 'Choose the sentence that uses correct subject-verb agreement:',
+          options: [
+            'The group of trainees was excited about their first day.',
+            'The group of trainees were excited about their first day.',
+            'The trainees is excited about their first day.',
+            'The group of trainees be excited about their first day.'
+          ],
+          correct: 0,
+          hint: 'Identify the core subject: "The group" is singular.',
+          explanation: '"The group" is a singular collective noun, so it takes the singular verb "was".'
+        },
+        {
+          id: 'l1_s2',
+          level: 'L1',
+          topic: 'spag',
+          type: 'mcq',
+          title: 'Homophone Usage',
+          passage: null,
+          question: 'Select the sentence with the correct spelling of homophones:',
+          options: [
+            'Their going to collect there certificates over text.',
+            'They\'re going to collect their certificates over there.',
+            'There going to collect their certificates over they\'re.',
+            'They\'re going to collect there certificates over their.'
+          ],
+          correct: 1,
+          hint: 'They\'re = They are | Their = Belonging to them | There = A location.',
+          explanation: '"They\'re" (They are) going to collect "their" (possessive) certificates over "there" (place).'
+        },
+        {
+          id: 'l1_s3',
+          level: 'L1',
+          topic: 'spag',
+          type: 'mcq',
+          title: 'Punctuation: Capital Letters & Full Stops',
+          passage: null,
+          question: 'Which sentence is correctly capitalized and punctuated?',
+          options: [
+            'next tuesday, manager sara smith will visit the Manchester branch.',
+            'Next Tuesday, manager Sara Smith will visit the Manchester branch.',
+            'Next tuesday, Manager sara Smith will Visit the manchester branch.',
+            'Next Tuesday, manager sara smith will visit the manchester branch.'
+          ],
+          correct: 1,
+          hint: 'Capitalize days of the week, proper names, and specific places (cities).',
+          explanation: 'Days (Tuesday), personal names (Sara Smith), and city names (Manchester) must start with capital letters.'
+        },
+
+        // --- WRITING (L1) ---
+        {
+          id: 'l1_w1',
+          level: 'L1',
+          topic: 'writing',
+          type: 'writing_task',
+          title: 'Formal Email Writing Task',
+          prompt: `You recently ordered a desk chair online from Office Supplies Direct. When it arrived yesterday, one of the legs was damaged and parts were missing.
+
+Write a formal email (approx. 100–150 words) to Customer Services (support@officesupplies.co.uk).
+You must include:
+• Details of what you ordered and when it arrived
+• An explanation of the problem
+• What action you want the company to take (e.g. replacement or refund).`,
+          rubric: [
+            'Used appropriate formal email greeting and sign-off (e.g., "Dear Customer Services...", "Yours sincerely").',
+            'Stated clear purpose of writing in the opening paragraph.',
+            'Included all requested information (order details, damage description, remedy required).',
+            'Organized ideas into clear paragraphs.',
+            'Checked spelling, punctuation, and grammar (accurate full stops, capitals).'
+          ]
+        }
+      ],
+
+      L2: [
+        // --- READING (L2) ---
+        {
+          id: 'l2_r1',
+          level: 'L2',
+          topic: 'reading',
+          type: 'mcq',
+          title: 'Organizational & Language Features',
+          passage: `Text A: Workplace Hybrid Policy
+Flexible working allows staff to balance office collaboration with focus time at home. However, employees must ensure core hours (10:00 - 15:00) are maintained. Failure to adhere to policy parameters may lead to formal review.
+
+Text B: Blog - My Hybrid Journey
+Working from home has been a total game-changer for my sanity! No more soul-crushing morning traffic, and I get to walk my dog at lunch. Sure, missing office chatter is a bummer, but my productivity has rocketed!`,
+          question: 'Compare the tone of Text A and Text B. Which option correctly identifies their stylistic styles?',
+          options: [
+            'Text A is informal and humorous, whereas Text B is neutral and academic.',
+            'Text A is formal and authoritative, whereas Text B is informal and personal.',
+            'Both texts use technical jargon and strict rule language.',
+            'Text A uses slang while Text B uses official workplace terminology.'
+          ],
+          correct: 1,
+          hint: 'Notice word choices: Text A uses "adhere to policy parameters" while Text B uses "game-changer" and "bummer".',
+          explanation: 'Text A is official policy language (formal/authoritative), while Text B is a blog post using colloquial language (informal/personal).'
+        },
+        {
+          id: 'l2_r2',
+          level: 'L2',
+          topic: 'reading',
+          type: 'mcq',
+          title: 'Implicit Meaning & Inference',
+          passage: `Although the council\'s new recycling scheme has increased waste sorting by 12%, local collection teams report having to work an extra 10 hours per week due to contaminated bins and poorly labeled guidelines.`,
+          question: 'What can be inferred from the text above?',
+          options: [
+            'The recycling scheme is completely flawless and cost-neutral.',
+            'Residents fully understand all new recycling guidelines.',
+            'While participation has grown, clearer instructions are needed to prevent operational strain.',
+            'Collection teams have requested a permanent reduction in working hours.'
+          ],
+          correct: 2,
+          hint: 'Read between the lines: high sorting rate + contaminated bins/extra hours = misinformed public.',
+          explanation: 'The extra hours caused by "contaminated bins" implies residents need better guidance despite higher overall participation.'
+        },
+
+        // --- SPAG (L2) ---
+        {
+          id: 'l2_s1',
+          level: 'L2',
+          topic: 'spag',
+          type: 'mcq',
+          title: 'Apostrophes for Possession',
+          passage: null,
+          question: 'Which sentence correctly uses apostrophes for plural possession?',
+          options: [
+            'The supervisor checked all the worker\'s tools before the shift.',
+            'The supervisor checked all the workers\' tools before the shift.',
+            'The supervisor checked all the workers tools\' before the shift.',
+            'The supervisor checked all the worker\'s tool\'s before the shift.'
+          ],
+          correct: 1,
+          hint: 'Plural regular nouns ending in "s" take the apostrophe *after* the "s" (workers\').',
+          explanation: 'Since "workers" is plural, the possessive apostrophe goes after the "s": workers\' tools.'
+        },
+        {
+          id: 'l2_s2',
+          level: 'L2',
+          topic: 'spag',
+          type: 'mcq',
+          title: 'Complex Sentences & Commas',
+          passage: null,
+          question: 'Select the sentence that uses a subordinating clause and punctuation correctly:',
+          options: [
+            'Although the weather forecast predicted heavy rain we decided to proceed with the outdoor charity walk.',
+            'Although the weather forecast predicted heavy rain, we decided to proceed with the outdoor charity walk.',
+            'Although, the weather forecast predicted heavy rain we decided to proceed, with the outdoor charity walk.',
+            'We decided to proceed, with the outdoor charity walk although the weather forecast predicted heavy rain.'
+          ],
+          correct: 1,
+          hint: 'When a sentence begins with a subordinate conjunction ("Although..."), place a comma after the dependent clause.',
+          explanation: 'A comma separates the introductory dependent clause ("Although the weather forecast predicted heavy rain,") from the main clause.'
+        },
+
+        // --- WRITING (L2) ---
+        {
+          id: 'l2_w1',
+          level: 'L2',
+          topic: 'writing',
+          type: 'writing_task',
+          title: 'Persuasive Article / Report Writing Task',
+          prompt: `Your local council is considering closing the town centre youth & community centre due to budget cuts. 
+
+Write a persuasive article for your local community newspaper arguing why the centre should remain open. (Approx. 200–250 words).
+
+You should include:
+• An engaging title and headline.
+• Arguments on how the centre benefits young people and older residents.
+• Suggestions for how the centre could raise funds or cut costs without closing.
+• Persuasive techniques (e.g. rhetorical questions, statistics, emotive language).`,
+          rubric: [
+            'Used an appropriate title and article structure (subheadings, paragraphs).',
+            'Adopted a persuasive and formal tone suitable for a newspaper audience.',
+            'Utilized persuasive techniques (e.g., rule of three, emotive language, direct address).',
+            'Presented clear, logical arguments with constructive solutions.',
+            'Demonstrated high accuracy in complex sentence structure, SPaG, and vocabulary choice.'
+          ]
+        }
+      ]
+    };
+
+    // ==========================================
+    // STATE MANAGEMENT
+    // ==========================================
+    let currentLevel = 'L1'; // L1 or L2
+    let currentPracticeFilter = 'all'; // all, reading, spag, writing
+    let examActive = false;
+    let examTimerInterval = null;
+    let examSeconds = 0;
+    let examUserAnswers = {}; // { questionId: selectedIndex or text }
+
+    // User Progress in LocalStorage
+    let userProgress = {
+      answeredCount: 0,
+      correctCount: 0,
+      bestExamScores: { L1: null, L2: null },
+      writingRubricsChecked: 0
+    };
+
+    // Initialize App on DOM Load
+    document.addEventListener('DOMContentLoaded', () => {
+      loadProgressFromStorage();
+      setLevel('L1');
+      updateDashboardStats();
+    });
+
+    // Save Progress to LocalStorage
+    function saveProgressToStorage() {
+      localStorage.setItem('fs_english_progress', JSON.stringify(userProgress));
+      updateDashboardStats();
+    }
+
+    // Load Progress from LocalStorage
+    function loadProgressFromStorage() {
+      const stored = localStorage.getItem('fs_english_progress');
+      if (stored) {
+        try {
+          userProgress = JSON.parse(stored);
+        } catch (e) {
+          console.error('Could not load stored progress');
+        }
+      }
+    }
+
+    // Reset Progress
+    function resetProgress() {
+      if (confirm('Are you sure you want to clear your saved scores and progress?')) {
+        userProgress = {
+          answeredCount: 0,
+          correctCount: 0,
+          bestExamScores: { L1: null, L2: null },
+          writingRubricsChecked: 0
+        };
+        saveProgressToStorage();
+        alert('Progress reset successfully.');
+      }
+    }
+
+    // Update Dashboard UI Stats
+    function updateDashboardStats() {
+      document.getElementById('stat-total-answered').innerText = userProgress.answeredCount;
+      
+      const acc = userProgress.answeredCount > 0 
+        ? Math.round((userProgress.correctCount / userProgress.answeredCount) * 100) 
+        : 0;
+      document.getElementById('stat-accuracy').innerText = `${acc}%`;
+
+      const bestL1 = userProgress.bestExamScores.L1 !== null ? `${userProgress.bestExamScores.L1}% (L1)` : null;
+      const bestL2 = userProgress.bestExamScores.L2 !== null ? `${userProgress.bestExamScores.L2}% (L2)` : null;
+      const bestText = [bestL1, bestL2].filter(Boolean).join(' | ') || 'N/A';
+      document.getElementById('stat-best-exam').innerText = bestText;
+
+      document.getElementById('stat-writing-completed').innerText = userProgress.writingRubricsChecked;
+      document.getElementById('dash-active-level').innerText = currentLevel === 'L1' ? 'Level 1' : 'Level 2';
+    }
+
+    // Switch Level (L1 vs L2)
+    function setLevel(lvl) {
+      currentLevel = lvl;
+      
+      // Update header buttons styling
+      const btnL1 = document.getElementById('level-l1-btn');
+      const btnL2 = document.getElementById('level-l2-btn');
+
+      if (lvl === 'L1') {
+        btnL1.className = 'px-3 py-1 text-xs font-semibold rounded-lg bg-brand-600 text-white shadow-sm';
+        btnL2.className = 'px-3 py-1 text-xs font-semibold rounded-lg text-slate-400 hover:text-white';
+      } else {
+        btnL2.className = 'px-3 py-1 text-xs font-semibold rounded-lg bg-brand-600 text-white shadow-sm';
+        btnL1.className = 'px-3 py-1 text-xs font-semibold rounded-lg text-slate-400 hover:text-white';
+      }
+
+      document.getElementById('dash-active-level').innerText = currentLevel === 'L1' ? 'Level 1' : 'Level 2';
+      document.getElementById('exam-card-level-label').innerText = currentLevel === 'L1' ? 'Level 1' : 'Level 2';
+
+      // Refresh practice questions if in practice tab
+      renderPracticeQuestions();
+    }
+
+    // Switch Main Navigation Views
+    function switchView(viewName) {
+      // Hide all views
+      document.getElementById('view-dashboard').classList.add('hidden');
+      document.getElementById('view-practice').classList.add('hidden');
+      document.getElementById('view-exam').classList.add('hidden');
+
+      // Unselect all tabs
+      document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.className = 'nav-tab px-3 py-2 text-sm font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 flex items-center space-x-2';
+      });
+
+      // Show target view & activate tab
+      if (viewName === 'dashboard') {
+        document.getElementById('view-dashboard').classList.remove('hidden');
+        document.getElementById('nav-dashboard').className = 'nav-tab px-3 py-2 text-sm font-medium border-b-2 border-brand-600 text-brand-600 flex items-center space-x-2';
+      } else if (viewName === 'practice') {
+        document.getElementById('view-practice').classList.remove('hidden');
+        document.getElementById('nav-practice').className = 'nav-tab px-3 py-2 text-sm font-medium border-b-2 border-brand-600 text-brand-600 flex items-center space-x-2';
+        renderPracticeQuestions();
+      } else if (viewName === 'exam') {
+        document.getElementById('view-exam').classList.remove('hidden');
+        document.getElementById('nav-exam').className = 'nav-tab px-3 py-2 text-sm font-medium border-b-2 border-brand-600 text-brand-600 flex items-center space-x-2';
+      }
+    }
+
+    function startTopic(topicKey) {
+      switchView('practice');
+      filterPracticeTopic(topicKey);
+    }
+
+
+    // ==========================================
+    // TOPIC PRACTICE LOGIC
+    // ==========================================
+    function filterPracticeTopic(topic) {
+      currentPracticeFilter = topic;
+      
+      // Update buttons style
+      document.querySelectorAll('.topic-filter-btn').forEach(btn => {
+        btn.className = 'topic-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200';
+      });
+
+      const activeBtn = document.getElementById(`topic-btn-${topic}`);
+      if (activeBtn) {
+        activeBtn.className = 'topic-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 text-white';
+      }
+
+      renderPracticeQuestions();
+    }
+
+    function renderPracticeQuestions() {
+      const container = document.getElementById('practice-questions-list');
+      container.innerHTML = '';
+
+      const questions = questionBank[currentLevel] || [];
+      const filtered = questions.filter(q => currentPracticeFilter === 'all' || q.topic === currentPracticeFilter);
+
+      document.getElementById('practice-count').innerText = filtered.length;
+      document.getElementById('practice-active-level').innerText = currentLevel === 'L1' ? 'Level 1' : 'Level 2';
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="p-8 text-center text-slate-400 bg-white rounded-2xl border border-slate-200">No questions found for this topic filter.</div>`;
+        return;
+      }
+
+      filtered.forEach((q, idx) => {
+        const qCard = document.createElement('div');
+        qCard.className = 'bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4';
+
+        // Render MCQ vs Writing
+        if (q.type === 'mcq') {
+          qCard.innerHTML = `
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md">
+                ${q.topic.toUpperCase()} &bull; Q${idx + 1}
+              </span>
+              <span class="text-xs text-slate-400 font-medium">${q.title}</span>
+            </div>
+
+            ${q.passage ? `
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs sm:text-sm text-slate-700 whitespace-pre-line leading-relaxed font-serif">
+                ${q.passage}
+              </div>
+            ` : ''}
+
+            <h4 class="text-sm sm:text-base font-bold text-slate-800">${q.question}</h4>
+
+            <div class="space-y-2">
+              ${q.options.map((opt, optIdx) => `
+                <label id="opt-label-${q.id}-${optIdx}" class="flex items-start p-3 rounded-xl border border-slate-200 hover:border-brand-300 hover:bg-slate-50 cursor-pointer transition text-xs sm:text-sm">
+                  <input type="radio" name="practice_${q.id}" value="${optIdx}" class="mt-0.5 text-brand-600 focus:ring-brand-500 mr-3">
+                  <span class="text-slate-700">${opt}</span>
+                </label>
+              `).join('')}
+            </div>
+
+            <!-- Hint Accordion -->
+            <div>
+              <button onclick="toggleHint('${q.id}')" class="text-xs text-amber-600 hover:text-amber-700 font-semibold flex items-center space-x-1">
+                <i class="fa-regular fa-lightbulb"></i>
+                <span>Need a Hint?</span>
+              </button>
+              <p id="hint-${q.id}" class="hidden mt-2 text-xs text-amber-800 bg-amber-50 p-3 rounded-xl border border-amber-200">
+                ${q.hint}
+              </p>
+            </div>
+
+            <!-- Check Answer Button & Feedback Area -->
+            <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+              <button onclick="checkPracticeAnswer('${q.id}')" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-bold transition">
+                Check Answer
+              </button>
+              <div id="feedback-${q.id}" class="hidden p-3 rounded-xl text-xs font-medium flex-grow"></div>
+            </div>
+          `;
+        } else if (q.type === 'writing_task') {
+          qCard.innerHTML = `
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2.5 py-1 rounded-md">
+                WRITING TASK &bull; Q${idx + 1}
+              </span>
+              <span class="text-xs text-slate-400 font-medium">${q.title}</span>
+            </div>
+
+            <div class="bg-purple-50/50 p-4 rounded-xl border border-purple-100 text-xs sm:text-sm text-slate-800 whitespace-pre-line leading-relaxed">
+              <strong>Scenario / Task:</strong><br>${q.prompt}
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Your Response:</label>
+              <textarea id="writing-input-${q.id}" rows="6" placeholder="Type your response here..." class="w-full p-3 rounded-xl border border-slate-300 text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 custom-scrollbar"></textarea>
+            </div>
+
+            <!-- Interactive Mark Scheme Checklist -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+              <h5 class="text-xs font-bold uppercase text-slate-600 tracking-wider">Self-Assessment Mark Scheme Checklist</h5>
+              <div class="space-y-2">
+                ${q.rubric.map((item, rIdx) => `
+                  <label class="flex items-start space-x-2 text-xs text-slate-700 cursor-pointer">
+                    <input type="checkbox" onchange="markRubricChecked()" class="mt-0.5 rounded text-purple-600 focus:ring-purple-500">
+                    <span>${item}</span>
+                  </label>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        container.appendChild(qCard);
+      });
+    }
+
+    function toggleHint(qId) {
+      const hintEl = document.getElementById(`hint-${qId}`);
+      if (hintEl) hintEl.classList.toggle('hidden');
+    }
+
+    function checkPracticeAnswer(qId) {
+      const questions = questionBank[currentLevel] || [];
+      const q = questions.find(item => item.id === qId);
+      if (!q) return;
+
+      const selectedOpt = document.querySelector(`input[name="practice_${qId}"]:checked`);
+      const feedbackEl = document.getElementById(`feedback-${qId}`);
+      feedbackEl.classList.remove('hidden', 'bg-emerald-50', 'text-emerald-800', 'border-emerald-200', 'bg-rose-50', 'text-rose-800', 'border-rose-200');
+
+      if (!selectedOpt) {
+        feedbackEl.classList.add('bg-amber-50', 'text-amber-800', 'border', 'border-amber-200');
+        feedbackEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Please select an option first.';
+        return;
+      }
+
+      const userVal = parseInt(selectedOpt.value, 10);
+      userProgress.answeredCount++;
+
+      if (userVal === q.correct) {
+        userProgress.correctCount++;
+        feedbackEl.classList.add('bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200');
+        feedbackEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> <strong>Correct!</strong> ${q.explanation}`;
+      } else {
+        feedbackEl.classList.add('bg-rose-50', 'text-rose-800', 'border', 'border-rose-200');
+        feedbackEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600 mr-1"></i> <strong>Incorrect.</strong> ${q.explanation}`;
+      }
+
+      saveProgressToStorage();
+    }
+
+    function markRubricChecked() {
+      userProgress.writingRubricsChecked++;
+      saveProgressToStorage();
+    }
+
+
+    // ==========================================
+    // EXAM MODE LOGIC
+    // ==========================================
+    function startExamPaper() {
+      examActive = true;
+      examSeconds = 0;
+      examUserAnswers = {};
+
+      document.getElementById('exam-start-card').classList.add('hidden');
+      document.getElementById('exam-results-container').classList.add('hidden');
+      document.getElementById('exam-active-container').classList.remove('hidden');
+
+      document.getElementById('exam-header-title').innerText = `${currentLevel === 'L1' ? 'Level 1' : 'Level 2'} Mock Exam Paper`;
+
+      // Start Timer
+      clearInterval(examTimerInterval);
+      examTimerInterval = setInterval(() => {
+        examSeconds++;
+        const mins = String(Math.floor(examSeconds / 60)).padStart(2, '0');
+        const secs = String(examSeconds % 60).padStart(2, '0');
+        document.getElementById('exam-timer').innerText = `${mins}:${secs}`;
+      }, 1000);
+
+      // Render Questions without answers or hints
+      const container = document.getElementById('exam-questions-list');
+      container.innerHTML = '';
+
+      const questions = questionBank[currentLevel] || [];
+
+      questions.forEach((q, idx) => {
+        const qCard = document.createElement('div');
+        qCard.className = 'bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4';
+
+        if (q.type === 'mcq') {
+          qCard.innerHTML = `
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">
+                QUESTION ${idx + 1}
+              </span>
+              <span class="text-xs text-slate-400 font-medium">${q.topic.toUpperCase()}</span>
+            </div>
+
+            ${q.passage ? `
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs sm:text-sm text-slate-700 whitespace-pre-line leading-relaxed font-serif">
+                ${q.passage}
+              </div>
+            ` : ''}
+
+            <h4 class="text-sm sm:text-base font-bold text-slate-800">${q.question}</h4>
+
+            <div class="space-y-2">
+              ${q.options.map((opt, optIdx) => `
+                <label class="flex items-start p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer transition text-xs sm:text-sm">
+                  <input type="radio" name="exam_${q.id}" value="${optIdx}" class="mt-0.5 text-brand-600 focus:ring-brand-500 mr-3">
+                  <span class="text-slate-700">${opt}</span>
+                </label>
+              `).join('')}
+            </div>
+          `;
+        } else if (q.type === 'writing_task') {
+          qCard.innerHTML = `
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2.5 py-1 rounded-md">
+                EXTENDED WRITING &bull; QUESTION ${idx + 1}
+              </span>
+            </div>
+
+            <div class="bg-purple-50/50 p-4 rounded-xl border border-purple-100 text-xs sm:text-sm text-slate-800 whitespace-pre-line leading-relaxed">
+              <strong>Scenario / Task:</strong><br>${q.prompt}
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Your Written Response:</label>
+              <textarea id="exam-writing-${q.id}" rows="8" placeholder="Type your full exam response here..." class="w-full p-3 rounded-xl border border-slate-300 text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 custom-scrollbar"></textarea>
+            </div>
+          `;
+        }
+
+        container.appendChild(qCard);
+      });
+    }
+
+    function submitExamPaper() {
+      if (!confirm('Are you sure you want to submit your exam paper now?')) return;
+
+      clearInterval(examTimerInterval);
+      examActive = false;
+
+      const questions = questionBank[currentLevel] || [];
+      let mcqTotal = 0;
+      let mcqCorrect = 0;
+
+      const reviewContainer = document.getElementById('exam-review-list');
+      reviewContainer.innerHTML = '';
+
+      questions.forEach((q, idx) => {
+        if (q.type === 'mcq') {
+          mcqTotal++;
+          const selected = document.querySelector(`input[name="exam_${q.id}"]:checked`);
+          const userVal = selected ? parseInt(selected.value, 10) : null;
+          const isCorrect = userVal === q.correct;
+
+          if (isCorrect) mcqCorrect++;
+
+          // Build Review item
+          const revItem = document.createElement('div');
+          revItem.className = `p-4 rounded-xl border text-xs sm:text-sm space-y-2 ${isCorrect ? 'bg-emerald-50/50 border-emerald-200' : 'bg-rose-50/50 border-rose-200'}`;
+          revItem.innerHTML = `
+            <div class="flex items-center justify-between font-bold">
+              <span>Q${idx + 1}: ${q.title}</span>
+              <span class="${isCorrect ? 'text-emerald-700' : 'text-rose-700'} uppercase text-xs">
+                ${isCorrect ? '<i class="fa-solid fa-circle-check"></i> Correct' : '<i class="fa-solid fa-circle-xmark"></i> Incorrect'}
+              </span>
+            </div>
+            <p class="text-slate-700"><strong>Question:</strong> ${q.question}</p>
+            <p class="text-slate-600"><strong>Your Answer:</strong> ${userVal !== null ? q.options[userVal] : '<em>No answer selected</em>'}</p>
+            ${!isCorrect ? `<p class="text-emerald-800"><strong>Correct Answer:</strong> ${q.options[q.correct]}</p>` : ''}
+            <p class="text-slate-500 italic pt-1 border-t border-slate-200/50">${q.explanation}</p>
+          `;
+          reviewContainer.appendChild(revItem);
+        } else if (q.type === 'writing_task') {
+          const textVal = document.getElementById(`exam-writing-${q.id}`)?.value || 'No response entered.';
+          const revItem = document.createElement('div');
+          revItem.className = 'p-4 rounded-xl border border-purple-200 bg-purple-50/30 text-xs sm:text-sm space-y-3';
+          revItem.innerHTML = `
+            <div class="font-bold text-purple-900">Q${idx + 1}: Writing Task Self-Review</div>
+            <div class="bg-white p-3 rounded-lg border border-purple-100 text-slate-700 whitespace-pre-wrap font-sans">${textVal}</div>
+            <div class="text-xs text-purple-800 space-y-1">
+              <strong>Assessment Criteria Checklist:</strong>
+              <ul class="list-disc pl-5 space-y-0.5 text-slate-600">
+                ${q.rubric.map(r => `<li>${r}</li>`).join('')}
+              </ul>
+            </div>
+          `;
+          reviewContainer.appendChild(revItem);
+        }
+      });
+
+      // Calculate score percentage (based on markable MCQs)
+      const percentage = mcqTotal > 0 ? Math.round((mcqCorrect / mcqTotal) * 100) : 0;
+      const isPass = percentage >= 60; // Standard pass mark threshold ~60%
+
+      // Save Best Exam Score
+      if (userProgress.bestExamScores[currentLevel] === null || percentage > userProgress.bestExamScores[currentLevel]) {
+        userProgress.bestExamScores[currentLevel] = percentage;
+      }
+      saveProgressToStorage();
+
+      // UI Result Display
+      document.getElementById('exam-active-container').classList.add('hidden');
+      document.getElementById('exam-results-container').classList.remove('hidden');
+
+      const badge = document.getElementById('exam-result-badge');
+      const passStatus = document.getElementById('exam-pass-status');
+
+      if (isPass) {
+        badge.className = 'w-20 h-20 rounded-full flex items-center justify-center text-3xl font-bold mx-auto bg-emerald-100 text-emerald-600';
+        badge.innerHTML = '<i class="fa-solid fa-trophy"></i>';
+        passStatus.className = 'text-xl font-bold text-emerald-600';
+        passStatus.innerText = 'PASS';
+      } else {
+        badge.className = 'w-20 h-20 rounded-full flex items-center justify-center text-3xl font-bold mx-auto bg-amber-100 text-amber-600';
+        badge.innerHTML = '<i class="fa-solid fa-book-open-reader"></i>';
+        passStatus.className = 'text-xl font-bold text-amber-600';
+        passStatus.innerText = 'RETRY ADVISABLE';
+      }
+
+      document.getElementById('exam-score-percentage').innerText = `${percentage}%`;
+      document.getElementById('exam-score-raw').innerText = `${mcqCorrect} / ${mcqTotal}`;
+      document.getElementById('exam-result-subtitle').innerText = isPass
+        ? `Great job! You passed the objective section of the ${currentLevel} Functional Skills paper.`
+        : `Keep practicing! Review the detailed breakdown below to improve your score on ${currentLevel}.`;
+    }
+  </script>
+</body>
+</html>
