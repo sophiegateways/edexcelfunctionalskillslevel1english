@@ -1,0 +1,443 @@
+import json
+
+data = {
+  "pack": "tottenham-hotspurs-fc-1",
+  "reading": [
+    {
+      "id": "r-tottenham-hotspurs-fc-1",
+      "topic": "Tottenham Hotspurs FC",
+      "title": "The Community Stadium Upgrade",
+      "minutes": 10,
+      "texts": [
+        {
+          "id": "A",
+          "levels": ["L1"],
+          "kind": "Web page",
+          "source": "North London Gazette Online",
+          "title": "New Facilities Coming to West End Ground",
+          "body": [
+            {
+              "p": "The local football club has announced exciting plans to upgrade its training ground and community facilities ahead of the new season. Club officials hope these improvements will encourage more young people to get involved in local sport."
+            },
+            {
+              "h": "What is changing?"
+            },
+            {
+              "p": "The project includes a brand new 3G pitch, improved changing rooms, and a modern cafe for supporters. Construction is scheduled to begin next month and should be finished by autumn."
+            },
+            {
+              "ul": [
+                "New floodlights for evening training sessions",
+                "Expanded parking spaces for match days",
+                "A dedicated bicycle shelter for cyclists"
+              ]
+            },
+            {
+              "p": "Club chairperson Jordan Lee stated, **\"This is the biggest investment our club has seen in over twenty years.\"** Many local residents believe this will bring a wonderful boost to the neighbourhood."
+            }
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "id": "q1",
+          "levels": ["L1"],
+          "type": "choice",
+          "text": "A",
+          "prompt": "According to the text, when is construction scheduled to begin?",
+          "options": [
+            "Next week",
+            "Next month",
+            "Next year",
+            "In the autumn"
+          ],
+          "answer": 1,
+          "why": "The text states: 'Construction is scheduled to begin next month and should be finished by autumn.'"
+        },
+        {
+          "id": "q2",
+          "levels": ["L1"],
+          "type": "tfns",
+          "text": "A",
+          "prompt": "The club chairperson is named Jordan Lee.",
+          "answer": "true",
+          "why": "The text confirms: 'Club chairperson Jordan Lee stated...'"
+        },
+        {
+          "id": "q3",
+          "levels": ["L1"],
+          "type": "factopinion",
+          "text": "A",
+          "prompt": "\"Many local residents believe this will bring a wonderful boost to the neighbourhood.\"",
+          "answer": "opinion",
+          "why": "It expresses what people believe rather than a proven, measurable fact."
+        },
+        {
+          "id": "q4",
+          "levels": ["L1"],
+          "type": "choice",
+          "text": "A",
+          "prompt": "Which new feature is specifically mentioned for cyclists?",
+          "options": [
+            "A repair station",
+            "A bicycle shelter",
+            "A free helmet hire",
+            "A secure locker room"
+          ],
+          "answer": 1,
+          "why": "The bullet points state: 'A dedicated bicycle shelter for cyclists'."
+        },
+        {
+          "id": "q5",
+          "levels": ["L1"],
+          "type": "tfns",
+          "text": "A",
+          "prompt": "The project includes a brand new grass pitch.",
+          "answer": "false",
+          "why": "The text states the project includes 'a brand new 3G pitch', not a grass pitch."
+        },
+        {
+          "id": "q6",
+          "levels": ["L1"],
+          "type": "choice",
+          "text": "A",
+          "prompt": "What kind of facility will be built for supporters?",
+          "options": [
+            "A museum",
+            "A modern cafe",
+            "A club shop",
+            "A bowling alley"
+          ],
+          "answer": 1,
+          "why": "The text mentions 'a modern cafe for supporters.'"
+        },
+        {
+          "id": "q7",
+          "levels": ["L1"],
+          "type": "tfns",
+          "text": "A",
+          "prompt": "The investment is the largest the club has seen in over two decades.",
+          "answer": "true",
+          "why": "Jordan Lee stated: 'This is the biggest investment our club has seen in over twenty years.'"
+        },
+        {
+          "id": "q8",
+          "levels": ["L1"],
+          "type": "open",
+          "text": "A",
+          "prompt": "Give two reasons why the club officials are making these upgrades.",
+          "model": "Club officials want to upgrade the training ground and community facilities, and they hope to encourage more young people to get involved in local sport.",
+          "check": [
+            "I gave two reasons from the text.",
+            "I checked my spelling and punctuation."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "r-tottenham-hotspurs-fc-2",
+      "topic": "Tottenham Hotspurs FC",
+      "title": "Matchday Experience Guide",
+      "minutes": 10,
+      "texts": [
+        {
+          "id": "A",
+          "levels": ["L1"],
+          "kind": "Leaflet",
+          "source": "West End Supporters Club",
+          "title": "Your Guide to Matchday",
+          "body": [
+            {
+              "p": "Welcome to another fantastic matchday at West End Ground! Whether you are a regular supporter or visiting for the very first time, we want to ensure you have an amazing experience."
+            },
+            {
+              "h": "Getting Here and Entering the Ground"
+            },
+            {
+              "p": "Gates open two hours before kick-off. We strongly advise arriving early to avoid long queues at the turnstiles. Public transport is the easiest way to reach the stadium, as parking on local residential streets is strictly prohibited."
+            },
+            {
+              "box": "Remember: Ticket checks take place at every perimeter gate. Please have your digital or paper ticket ready."
+            },
+            {
+              "p": "Inside the concourse, you can find a wide variety of food and drink options, ranging from hot pies to vegan snacks. Cashless payments are accepted at all food outlets."
+            }
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "id": "q1",
+          "levels": ["L1"],
+          "type": "choice",
+          "text": "A",
+          "prompt": "When do the stadium gates open before kick-off?",
+          "options": [
+            "One hour before",
+            "Two hours before",
+            "Three hours before",
+            "Thirty minutes before"
+          ],
+          "answer": 1,
+          "why": "The text states: 'Gates open two hours before kick-off.'"
+        },
+        {
+          "id": "q2",
+          "levels": ["L1"],
+          "type": "tfns",
+          "text": "A",
+          "prompt": "You are allowed to park your car on local residential streets.",
+          "answer": "false",
+          "why": "The text states: 'parking on local residential streets is strictly prohibited.'"
+        },
+        {
+          "id": "q3",
+          "levels": ["L1"],
+          "type": "factopinion",
+          "text": "A",
+          "prompt": "\"Welcome to another fantastic matchday at West End Ground!\"",
+          "answer": "opinion",
+          "why": "Describing the matchday as 'fantastic' is a personal viewpoint or feeling rather than a hard fact."
+        },
+        {
+          "id": "q4",
+          "levels": ["L1"],
+          "type": "choice",
+          "text": "A",
+          "prompt": "What payment method is accepted at all food outlets?",
+          "options": [
+            "Cash only",
+            "Token only",
+            "Cashless payments",
+            "Vouchers only"
+          ],
+          "answer": 2,
+          "why": "The text states: 'Cashless payments are accepted at all food outlets.'"
+        },
+        {
+          "id": "q5",
+          "levels": ["L1"],
+          "type": "tfns",
+          "text": "A",
+          "prompt": "Ticket checks take place at every perimeter gate.",
+          "answer": "true",
+          "why": "The boxed text notes: 'Ticket checks take place at every perimeter gate.'"
+        },
+        {
+          "id": "q6",
+          "levels": ["L1"],
+          "type": "choice",
+          "text": "A",
+          "prompt": "What is recommended as the easiest way to reach the stadium?",
+          "options": [
+            "Driving a car",
+            "Public transport",
+            "Walking from afar",
+            "Taking a taxi"
+          ],
+          "answer": 1,
+          "why": "The text notes: 'Public transport is the easiest way to reach the stadium...'"
+        },
+        {
+          "id": "q7",
+          "levels": ["L1"],
+          "type": "tfns",
+          "text": "A",
+          "prompt": "Only meat pies are available on the concourse.",
+          "answer": "notstated",
+          "why": "The text mentions hot pies and vegan snacks, but it does not state whether only meat pies are sold."
+        },
+        {
+          "id": "q8",
+          "levels": ["L1"],
+          "type": "open",
+          "text": "A",
+          "prompt": "According to the guide, why should supporters arrive early?",
+          "model": "Supporters should arrive early to avoid long queues at the turnstiles.",
+          "check": [
+            "I explained why arriving early is recommended.",
+            "I checked my grammar."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "r-tottenham-hotspurs-fc-3",
+      "topic": "Tottenham Hotspurs FC",
+      "title": "Junior Supporter Club Newsletter",
+      "minutes": 10,
+      "texts": [
+        {
+          "id": "A",
+          "levels": ["L1"],
+          "kind": "Newsletter",
+          "source": "West End Youth Magazine",
+          "title": "Junior Club Updates",
+          "body": [
+            {
+              "p": "Hello young fans! We have some brilliant news regarding our junior coaching sessions and upcoming events at the stadium."
+            },
+            {
+              "h": "Player Q&A Event"
+            },
+            {
+              "p": "Next Saturday afternoon, we are hosting a special question-and-answer session with members of our coaching staff in the main lounge. You will be able to ask questions about tactics, training routines, and how they prepare for big games."
+            },
+            {
+              "ul": [
+                "Free entry for all junior members",
+                "Doors open at 1:30 PM",
+                "Free signed posters for the first fifty attendees"
+              ]
+            },
+            {
+              "p": "If you want to attend, please send an email to the club office by Thursday evening to reserve your seat."
+            }
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "id": "q1",
+          "levels": ["L1"],
+          "type": "choice",
+          "text": "A",
+          "prompt": "When is the player Q&A event taking place?",
+          "options": [
+            "Next Thursday evening",
+            "Next Saturday afternoon",
+            "Next Sunday morning",
+            "Next Friday night"
+          ],
+          "answer": 1,
+          "why": "The text states: 'Next Saturday afternoon, we are hosting a special question-and-answer session...'"
+        },
+        {
+          "id": "q2",
+          "levels": ["L1"],
+          "type": "tfns",
+          "text": "A",
+          "prompt": "Entry to the event is free for all junior members.",
+          "answer": "true",
+          "why": "The bullet points state: 'Free entry for all junior members'."
+        },
+        {
+          "id": "q3",
+          "levels": ["L1"],
+          "type": "factopinion",
+          "text": "A",
+          "prompt": "\"We have some brilliant news regarding our junior coaching sessions...\"",
+          "answer": "opinion",
+          "why": "Calling the news 'brilliant' is an opinion rather than a proven fact."
+        },
+        {
+          "id": "q4",
+          "levels": ["L1"],
+          "type": "choice",
+          "text": "A",
+          "prompt": "What do the first fifty attendees receive for free?",
+          "options": [
+            "A football",
+            "A signed poster",
+            "A scarf",
+            "A snack voucher"
+          ],
+          "answer": 1,
+          "why": "The text states: 'Free signed posters for the first fifty attendees'."
+        },
+        {
+          "id": "q5",
+          "levels": ["L1"],
+          "type": "tfns",
+          "text": "A",
+          "prompt": "Doors open for the event at 1:30 PM.",
+          "answer": "true",
+          "why": "The bullet points confirm: 'Doors open at 1:30 PM'."
+        },
+        {
+          "id": "q6",
+          "levels": ["L1"],
+          "type": "choice",
+          "text": "A",
+          "prompt": "By what time must junior members email the club office to reserve a seat?",
+          "options": [
+            "Thursday evening",
+            "Friday morning",
+            "Saturday noon",
+            "Wednesday afternoon"
+          ],
+          "answer": 0,
+          "why": "The text states: 'please send an email to the club office by Thursday evening...'"
+        },
+        {
+          "id": "q7",
+          "levels": ["L1"],
+          "type": "tfns",
+          "text": "A",
+          "prompt": "The event is being held in the main lounge.",
+          "answer": "true",
+          "why": "The text states the session is 'in the main lounge'."
+        },
+        {
+          "id": "q8",
+          "levels": ["L1"],
+          "type": "open",
+          "text": "A",
+          "prompt": "Name two topics you can ask questions about during the Q&A session.",
+          "model": "You can ask questions about tactics, training routines, and how staff prepare for big games.",
+          "check": [
+            "I listed two topics from the text.",
+            "I checked my spelling."
+          ]
+        }
+      ]
+    }
+  ],
+  "writing": [
+    {
+      "id": "w-tottenham-hotspurs-fc-1",
+      "topic": "Tottenham Hotspurs FC",
+      "task": 2,
+      "title": "Feedback on New Facilities",
+      "format": "forum",
+      "context": "The local club forum is asking fans for their opinions on the newly planned training ground and community facilities.",
+      "audience": "Club officials and other local supporters reading the forum.",
+      "purpose": "To share views on the new facilities and suggest one additional feature.",
+      "instruction": "Write a short forum post giving your thoughts on the new upgrade.",
+      "bullets": [
+        "Say which part of the new upgrade you like most and why",
+        "Suggest one extra feature that would make the facilities even better for young people"
+      ],
+      "indicative": [
+        "Mentioning a specific feature like the 3G pitch or the cafe, explaining how it helps the community.",
+        "Proposing a sensible addition such as indoor study spaces or equipment hire for local schools."
+      ]
+    },
+    {
+      "id": "w-tottenham-hotspurs-fc-2",
+      "topic": "Tottenham Hotspurs FC",
+      "task": 1,
+      "title": "Email to the Club Manager",
+      "format": "email",
+      "context": "You attended the recent community open day at West End Ground and want to write to the club manager to share your feedback.",
+      "audience": "The club manager, Morgan Davies.",
+      "purpose": "To thank the club for the open day, give feedback on what went well, and propose a new community idea.",
+      "instruction": "Write an email to the club manager about your visit to the ground.",
+      "bullets": [
+        "Thank the club for organising the open day event",
+        "Describe your favourite part of the visit and explain why you enjoyed it",
+        "Suggest a new event or activity the club could hold for young fans in the future"
+      ],
+      "indicative": [
+        "Polite opening and closing, expressing gratitude for the community event.",
+        "Highlighting a particular tour, activity, or interaction with staff and giving reasons.",
+        "Suggesting a constructive future idea like a youth football tournament or a skills workshop."
+      ]
+    }
+  ]
+}
+
+with open("tottenham-hotspurs-fc-pack.json", "w", encoding="utf-8") as f:
+    json.dump(data, f, indent=2)
+
+print("JSON file generated successfully.")
